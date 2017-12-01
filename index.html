@@ -202,7 +202,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -212,7 +212,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -259,6 +259,290 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/12/01/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/01/1/" itemprop="url">nginx配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-01T20:25:30+08:00">
+                2017-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>一般nginx.conf的主机配置会指向一个文件夹，方便统一管理</p>
+</blockquote>
+<ul>
+<li>nginx.conf 配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># nginx运行用户及用户组</span><br><span class="line">user    nginx nginx;</span><br><span class="line"></span><br><span class="line"># 线程数，一般跟逻辑CPU核数一致</span><br><span class="line">worker_processes 2;</span><br><span class="line"></span><br><span class="line"># 日志文件</span><br><span class="line">error_log /app/application/logs/nginx/openresty/nginx_error.log error;</span><br><span class="line"></span><br><span class="line"># 进程id的存储文件位置</span><br><span class="line">pid       /app/application/logs/nginx/openresty/nginx.pid;</span><br><span class="line"></span><br><span class="line"># 指定一个nginx进程打开的最多文件描述符数目，受系统进程的最大打开文件数量限制</span><br><span class="line">worker_rlimit_nofile 65535;</span><br><span class="line"></span><br><span class="line">events</span><br><span class="line">&#123;</span><br><span class="line">    # 工作模式:select, poll, kqueue, epoll, /dev/poll, eventport. epoll是多路复用IO中的一种方式</span><br><span class="line">    use epoll;</span><br><span class="line">    #定义每个进程的最大连接数,受系统进程的最大打开文件数量限制</span><br><span class="line">    worker_connections 65535;</span><br><span class="line">&#125;</span><br><span class="line">http</span><br><span class="line">&#123;</span><br><span class="line">    # 设定mime类型,类型由mime.type文件定义</span><br><span class="line">    include mime.types;</span><br><span class="line">    default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line">    # 开启gzip压缩</span><br><span class="line">    gzip on;</span><br><span class="line">    gzip_min_length 1k;</span><br><span class="line">    gzip_buffers 4 16k;</span><br><span class="line">    gzip_http_version 1.0;</span><br><span class="line">    gzip_comp_level 2;</span><br><span class="line">    gzip_types text/plain application/x-javascript text/css application/xml;</span><br><span class="line">    gzip_vary on;</span><br><span class="line"></span><br><span class="line">    # 日志格式</span><br><span class="line">    log_format main</span><br><span class="line">      &apos;$remote_addr - $remote_user [$time_local] &apos;</span><br><span class="line">      &apos;$request_length &apos;</span><br><span class="line">       &apos;&quot;$request&quot; $status $bytes_sent $body_bytes_sent &apos;</span><br><span class="line">      &apos;&quot;$http_referer&quot; &quot;$http_user_agent&quot; &apos;</span><br><span class="line">      &apos;&quot;$gzip_ratio&quot; &quot;$request_time&quot; &apos;</span><br><span class="line">      &apos;&quot;$upstream_addr&quot; &quot;$upstream_status&quot; &quot;$upstream_response_time&quot;&apos;;</span><br><span class="line"></span><br><span class="line">    # 设定请求缓冲</span><br><span class="line">    client_max_body_size 20m;</span><br><span class="line">    large_client_header_buffers  4 128k;</span><br><span class="line">    client_header_buffer_size 128k;</span><br><span class="line"></span><br><span class="line">    # 连接超时时间</span><br><span class="line">    keepalive_timeout 0;</span><br><span class="line"></span><br><span class="line">    # lua kafka</span><br><span class="line">    lua_package_path &quot;/app/application/nginx/openresty-1.11.2.3/lua-resty-kafka-master/lib/?.lua;;&quot;;</span><br><span class="line"></span><br><span class="line">    # 主机配置文件</span><br><span class="line">  	include /app/application/nginx/openresty-1.11.2.3/nginx/conf/vhost/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>vhost 文件：如：fqiyou.com.conf</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        # 侦听80端口</span><br><span class="line">        listen       80;</span><br><span class="line"></span><br><span class="line">        #定义使用 www.fqiyou.com;</span><br><span class="line">        server_name www.fqiyou.com;</span><br><span class="line"></span><br><span class="line">        #定义服务器的默认网站根目录位置</span><br><span class="line">        root /app/fqiyou/web-app/www;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root /app/fqiyou/web-app/www;</span><br><span class="line">            index index.html;</span><br><span class="line">        &#125;</span><br><span class="line">        location /dingding &#123;</span><br><span class="line">            allow 192.168.100.0/24;</span><br><span class="line">            allow 172.16.10.0/23;</span><br><span class="line">            allow 192.168.100.0/22;</span><br><span class="line">            allow 123.126.111.162;</span><br><span class="line">            allow 101.200.59.111;</span><br><span class="line">            allow 122.49.39.69;</span><br><span class="line">            expires 1h;</span><br><span class="line">            proxy_set_header Host $host;</span><br><span class="line">            proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_pass http://127.0.0.1:5100/;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #静态文件，nginx自己处理</span><br><span class="line">        location ~ ^/(images|javascript|js|css|flash|media|static)/ &#123;</span><br><span class="line">            # 过期30天</span><br><span class="line">            expires 30d;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #禁止访问 .ht文件</span><br><span class="line">        location ~ /.ht &#123;</span><br><span class="line">            deny all;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name fqiyou.com;</span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://www.fqiyou.com;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>location匹配命令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 只匹配&quot;/&quot;</span><br><span class="line">location  = / &#123;</span><br><span class="line">  [ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 匹配任何请求,但是更长字符匹配或者正则表达式匹配会优先匹配</span><br><span class="line">location  / &#123;</span><br><span class="line">  [ configuration B ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 匹配任何以 /images/ 开始的请求，并停止匹配 其它location</span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">  [ configuration C ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 匹配以 gif, jpg, or jpeg结尾的请求. /images/ 的还是[Configuration C]</span><br><span class="line">location ~* .(gif|jpg|jpeg)$ &#123;</span><br><span class="line">  [ configuration D ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/11/30/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/30/1/" itemprop="url">nginx搭建-openresty</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-30T20:19:07+08:00">
+                2017-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>下载链接</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://openresty.org/cn/download.html</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解压</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf openresty-1.11.2.3.tar.gz</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">useradd -s /sbin/nolologin -M openresty-nginx;</span><br><span class="line">./configure \</span><br><span class="line"> --prefix=/app/application/nginx/openresty-1.11.2.3\</span><br><span class="line"> --user=openresty-nginx\</span><br><span class="line"> --group=openresty-nginx</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试启动</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./sbin/nginx -t</span><br><span class="line">./sbin/nginx -s reload</span><br><span class="line"></span><br><span class="line">netstat -apu</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>问题1</p>
+<blockquote>
+<p>HTTP rewrite</p>
+</blockquote>
+<ul>
+<li>错误</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure: error: the HTTP rewrite module requires the</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解决</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install pcre-devel openssl openssl-devel</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/03/30/1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -288,7 +572,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T20:25:31+08:00">
                 2017-03-30
@@ -447,7 +731,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T20:20:24+08:00">
                 2017-03-30
@@ -593,7 +877,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-03T20:32:50+08:00">
                 2017-03-03
@@ -751,8 +1035,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -764,8 +1048,8 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -815,7 +1099,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
