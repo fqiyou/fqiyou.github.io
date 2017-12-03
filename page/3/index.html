@@ -259,6 +259,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/03/30/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/30/1/" itemprop="url">表空间</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T20:20:24+08:00">
+                2017-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>查看表空间使用情况</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">SELECT d.status &quot;Status&quot;,</span><br><span class="line">       d.tablespace_name &quot;Name&quot;,</span><br><span class="line">       d.contents &quot;Type&quot;,</span><br><span class="line">       d.extent_management &quot;Extent Management&quot;,</span><br><span class="line">       NVL(a.bytes / 1024 / 1024, 0) &quot;Size (M)&quot;,</span><br><span class="line">       NVL(a.bytes - NVL(f.bytes, 0), 0) / 1024 / 1024 &quot;Used (M)&quot;,</span><br><span class="line">       NVL((a.bytes - NVL(f.bytes, 0)) / a.bytes * 100, 0) &quot;Used %&quot;</span><br><span class="line">  FROM sys.dba_tablespaces d,</span><br><span class="line">       (select tablespace_name, sum(bytes) bytes</span><br><span class="line">          from dba_data_files</span><br><span class="line">         group by tablespace_name) a,</span><br><span class="line">       (select tablespace_name, sum(bytes) bytes</span><br><span class="line">          from dba_free_space</span><br><span class="line">         group by tablespace_name) f</span><br><span class="line"> WHERE d.tablespace_name = a.tablespace_name(+)</span><br><span class="line">   AND d.tablespace_name = f.tablespace_name(+)</span><br><span class="line">   AND NOT</span><br><span class="line">        (d.extent_management like &apos;LOCAL&apos; AND d.contents like &apos;TEMPORARY&apos;)</span><br><span class="line">UNION ALL</span><br><span class="line">SELECT d.status &quot;Status&quot;,</span><br><span class="line">       d.tablespace_name &quot;Name&quot;,</span><br><span class="line">       d.contents &quot;Type&quot;,</span><br><span class="line">       d.extent_management &quot;Extent Management&quot;,</span><br><span class="line">       NVL(a.bytes / 1024 / 1024, 0) &quot;Size (M)&quot;,</span><br><span class="line">       NVL(t.bytes, 0) / 1024 / 1024 &quot;Used (M)&quot;,</span><br><span class="line">       NVL(t.bytes / a.bytes * 100, 0) &quot;Used %&quot;</span><br><span class="line">  FROM sys.dba_tablespaces d,</span><br><span class="line">       (select tablespace_name, sum(bytes) bytes</span><br><span class="line">          from dba_temp_files</span><br><span class="line">         group by tablespace_name) a,</span><br><span class="line">       (select tablespace_name, sum(bytes_cached) bytes</span><br><span class="line">          from v$temp_extent_pool</span><br><span class="line">         group by tablespace_name) t</span><br><span class="line"> WHERE d.tablespace_name = a.tablespace_name(+)</span><br><span class="line">   AND d.tablespace_name = t.tablespace_name(+)</span><br><span class="line">   AND d.extent_management like &apos;LOCAL&apos;</span><br><span class="line">   AND d.contents like &apos;TEMPORARY&apos;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看表空间对应的段</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select a.BYTES / 1024 / 1024 cnt, a.*</span><br><span class="line">  from dba_segments a</span><br><span class="line"> where a.tablespace_name = &apos;USERS&apos;</span><br><span class="line"> order by cnt desc;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建表空间</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create tablespace tbs_name datafile &apos;/dev/data/data008&apos; size 10M autoextend on next 2M maxsize 2G;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create undo tablesoace undo_tbs_name datafile &apos;/dev/data/data009&apos; size 50M;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create temporary tablespace temp_tbs_name temp_file &apos;/dev/date/data010&apos; size 50M;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改表空间</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 自动增长</span><br><span class="line">select * from dba_data_files c where c.tablespace_name = &apos;TBS_NAME&apos;;</span><br><span class="line">alter database datafile &apos;/dir_home/file_name&apos; resize 20M;</span><br><span class="line">alter database datafile &apos;/dir_home/file_name&apos; autoextend on next 2M maxsize 4G;</span><br><span class="line">alter database datafile &apos;/dir_home/file_name&apos; autoextend off;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 增加临时表空间</span><br><span class="line">select * from v$tempfile;</span><br><span class="line">alter database tempfile &apos;/dir_home/file_name&apos; resize 100 ;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 收缩临时表空间</span><br><span class="line">select * from v$tempfile;</span><br><span class="line">alter tablespace temp_tbs_name shrink space keep 100M;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 收缩临时数据文件</span><br><span class="line">select * from v$tempfile;</span><br><span class="line">alter tablespace temp_tbs_name shrink tempfile &apos;/dir_home/file_name&apos; keep 100M;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- aix系统 lsvg -o | xargs lsvg -l | grep closed</span><br><span class="line">alter tablespace tbs_sta_ifact add datafile &apos;/dev/rstavg9_8_043&apos; size 8191M autoextend off;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 表空间脱机</span><br><span class="line">alter tablespace tbs_name offline;</span><br><span class="line">alter tablespace tbs_online;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 表空间只读</span><br><span class="line">alter tablespace tbs_name read only;</span><br><span class="line">alter tablespace tbs_name read write;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 改名</span><br><span class="line">alter tablespace tbs_name rename to new_tbs_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 默认表空间</span><br><span class="line">alter database default tablespace tbs_name;</span><br><span class="line">alter database default temporary tablespace temp_tbs_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 删除表空间</span><br><span class="line">drop  tablespace tbs_name including contents and datafiles;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/03/03/1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -450,7 +596,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>

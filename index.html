@@ -543,6 +543,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/04/21/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/21/1/" itemprop="url">Hadoop-配置启动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-21T20:23:03+08:00">
+                2017-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://192.168.1.109/soft/packages/hadoop-2.6.4.tar.gz</span><br><span class="line">tar -zxvf hadoop-2.6.4.tar.gz</span><br></pre></td></tr></table></figure>
+<h4 id="环境变量导入"><a href="#环境变量导入" class="headerlink" title="环境变量导入"></a>环境变量导入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/app/application/hadoop/hadoop-2.6.4</span><br><span class="line">export HADOOP_INSTALL=$HADOOP_HOME</span><br><span class="line">export HADOOP_MAPRED_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_COMMON_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_HDFS_HOME=$HADOOP_HOME</span><br><span class="line">export YARN_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_YARN_HOME=$HADOOP_HOME</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+<h4 id="配置文件修改"><a href="#配置文件修改" class="headerlink" title="配置文件修改"></a>配置文件修改</h4><h5 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-- &lt;configuration&gt;节点添加</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.default.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hdfs://namenode:9000&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/app/data/hadoop/tmp&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;io.sort.factor&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;50&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.trash.interval&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1440&lt;/value&gt;</span><br><span class="line">        &lt;description&gt;</span><br><span class="line">        Number of minutes between trash checkpoints. If zero, the trash feature is disabled.</span><br><span class="line">        &lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="hadoop-env-sh"><a href="#hadoop-env-sh" class="headerlink" title="hadoop-env.sh"></a>hadoop-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 修改环境变量</span><br><span class="line">export JAVA_HOME=/app/application/java/default</span><br><span class="line">export HADOOP_LOG_DIR=/app/data/hadoop/logs</span><br><span class="line">export HADOOP_CONF_DIR=/app/application/hadoop/hadoop-2.6.4/etc/hadoop</span><br></pre></td></tr></table></figure>
+<h5 id="hdfs-site-xml"><a href="#hdfs-site-xml" class="headerlink" title="hdfs-site.xml"></a>hdfs-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">-- &lt;configuration&gt;节点添加</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;3&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.name.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/app/data/hadoop/name&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.data.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/app/data/hadoop/data&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.block.size&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;134217728&lt;/value&gt;</span><br><span class="line">        &lt;description&gt;block size, unit is Byte, default is 64MB&lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.balance.bandwidthPerSec&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;10485760&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;namenode:50090&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="yarn-site-xml"><a href="#yarn-site-xml" class="headerlink" title="yarn-site.xml"></a>yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">-- &lt;configuration&gt;节点添加</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;namenode:8032&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;namenode:8030&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;namenode:8031&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;namenode:8033&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">    &lt;property&gt;  </span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;  </span><br><span class="line">        &lt;value&gt;namenode:8088&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">     &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.resource.memory-mb&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;225280&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">     &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.scheduler.minimum-allocation-mb&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;4098&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">     &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.resource.cpu-vcores&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;32&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.log-dirs&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/app/data/hadoop/logs&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="yarn-env-sh"><a href="#yarn-env-sh" class="headerlink" title="yarn-env.sh"></a>yarn-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 修改环境变量</span><br><span class="line">export JAVA_HOME=/app/application/java/default</span><br></pre></td></tr></table></figure>
+<h5 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.job.tracker&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;namenode:9001&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.tasktracker.map.tasks.maximum&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;16&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.tasktracker.reduce.tasks.maximum&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;16&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.task.timeout&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1800000&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.child.java.opts&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;-Xmx1024m&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.jobtracker.taskScheduler&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;org.apache.hadoop.mapred.CapacityTaskScheduler&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">     &lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce.map.memory.mb&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce.reduce.memory.mb&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;4096&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce.map.java.opts&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;-Xmx768m&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce.reduce.java.opts&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;-Xmx3072m&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="slaves"><a href="#slaves" class="headerlink" title="slaves"></a>slaves</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">namenode</span><br><span class="line">datanode1</span><br><span class="line">datanode2</span><br></pre></td></tr></table></figure>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><h4 id="格式化namenode节点"><a href="#格式化namenode节点" class="headerlink" title="格式化namenode节点"></a>格式化namenode节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+<h4 id="启动hdfs"><a href="#启动hdfs" class="headerlink" title="启动hdfs"></a>启动hdfs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HADOOP_HOME/sbin</span><br><span class="line">./start-dfs.sh</span><br></pre></td></tr></table></figure>
+<h4 id="启动yarn"><a href="#启动yarn" class="headerlink" title="启动yarn"></a>启动yarn</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HADOOP_HOME/sbin</span><br><span class="line">./start-yarn.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>hdfs常用命令</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-ls -R &lt;路径&gt;</td>
+<td>递归查看</td>
+</tr>
+<tr>
+<td>-du -s &lt;路径&gt;</td>
+<td>汇总统计文件大小</td>
+</tr>
+<tr>
+<td>-rmr &lt;路径&gt;</td>
+<td>递归删除</td>
+</tr>
+<tr>
+<td>-put &lt;+linux路径&gt; &lt;路径&gt;</td>
+<td>上传</td>
+</tr>
+<tr>
+<td>-copyFromLocal &lt;+linux路径&gt; &lt;路径&gt;</td>
+<td>从本地复制</td>
+</tr>
+<tr>
+<td>-getmerge &lt;路径&gt; <linux路径></linux路径></td>
+<td>合并到本地</td>
+</tr>
+<tr>
+<td>-copyToLocal  &lt;路径&gt; <linux路径></linux路径></td>
+<td>到本地复制</td>
+</tr>
+<tr>
+<td>-touchz</td>
+<td>创建文件</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/04/20/1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1712,136 +1888,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/04/12/1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fqiyou">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/001.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fqiyou-Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/12/1/" itemprop="url">merge-into</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-12T19:53:21+08:00">
-                2017-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Merge-into"><a href="#Merge-into" class="headerlink" title="Merge into"></a>Merge into</h2><blockquote>
-<p>MERGE语句是用来合并UPDATE和INSERT语句,通过MERGE语句,根据一张表或子查询的连接条件对另外一张表进行查询,连接条件匹配上的进行UPDATE,无法匹配的执行INSERT;<br>这个语法仅需要一次全表扫描就完成了全部工作,执行效率要高于INSERT＋UPDATE.</p>
-</blockquote>
-<ul>
-<li>1.0 测试数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table temp1.employees  as select * from hr.employees;</span><br><span class="line">create table temp2.employees  as select * from hr.employees;</span><br><span class="line">-- 对temp2.employees 进行数据删除</span><br><span class="line">update temp2.employees c set c.last_name = &apos;TEST&apos;  where mod(c.employee_id,3) = 0;</span><br><span class="line">delete  temp2.employees c   where mod(c.employee_id,2) = 0;</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>2.0 进行修复数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">merge into temp2.employees t1</span><br><span class="line">USING temp1.employees t2</span><br><span class="line">ON (t1.employee_id = t2.employee_id)</span><br><span class="line">WHEN MATCHED THEN</span><br><span class="line">  UPDATE</span><br><span class="line">     SET t1.last_name = t2.last_name, t1.first_name = &apos;TEST&apos;</span><br><span class="line">   where t1.last_name = &apos;TEST&apos;</span><br><span class="line">when not MATCHED then</span><br><span class="line">  insert</span><br><span class="line">    (employee_id, last_name, email, hire_date, job_id)</span><br><span class="line">  values</span><br><span class="line">    (t2.employee_id, t2.last_name, t2.email, t2.hire_date, t2.job_id);</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1892,7 +1938,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
