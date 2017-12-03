@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="oracle_db," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="异常 原因     ACCESS_INTO_NULL 未定义对象   CASE_NOT_FOUND CASE中若未包含相应的 WHEN,并且没有设置ELSE时   COLLECTION_IS_NULL 集合元素未初始化   CURSER_ALREADY_OPEN 游标已经打开   DUP_VAL_ON_INDEX 唯一">
+<meta name="keywords" content="oracle_db">
+<meta property="og:type" content="article">
+<meta property="og:title" content="exception">
+<meta property="og:url" content="http://blog.fqiyou.com/2017/04/18/1/index.html">
+<meta property="og:site_name" content="Fqiyou-Blog">
+<meta property="og:description" content="异常 原因     ACCESS_INTO_NULL 未定义对象   CASE_NOT_FOUND CASE中若未包含相应的 WHEN,并且没有设置ELSE时   COLLECTION_IS_NULL 集合元素未初始化   CURSER_ALREADY_OPEN 游标已经打开   DUP_VAL_ON_INDEX 唯一索引对应的列上有重复的值   INVALID_CURSOR 在不合法的游标">
+<meta property="og:updated_time" content="2017-12-03T12:12:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="exception">
+<meta name="twitter:description" content="异常 原因     ACCESS_INTO_NULL 未定义对象   CASE_NOT_FOUND CASE中若未包含相应的 WHEN,并且没有设置ELSE时   COLLECTION_IS_NULL 集合元素未初始化   CURSER_ALREADY_OPEN 游标已经打开   DUP_VAL_ON_INDEX 唯一索引对应的列上有重复的值   INVALID_CURSOR 在不合法的游标">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.fqiyou.com/2017/04/18/1/"/>
+
+
+
+
+
+  <title>exception | Fqiyou-Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fqiyou-Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/04/18/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">exception</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-18T20:03:12+08:00">
+                2017-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <table>
+<thead>
+<tr>
+<th style="text-align:left">异常</th>
+<th style="text-align:left">原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ACCESS_INTO_NULL</td>
+<td style="text-align:left">未定义对象</td>
+</tr>
+<tr>
+<td style="text-align:left">CASE_NOT_FOUND</td>
+<td style="text-align:left">CASE中若未包含相应的 WHEN,并且没有设置ELSE时</td>
+</tr>
+<tr>
+<td style="text-align:left">COLLECTION_IS_NULL</td>
+<td style="text-align:left">集合元素未初始化</td>
+</tr>
+<tr>
+<td style="text-align:left">CURSER_ALREADY_OPEN</td>
+<td style="text-align:left">游标已经打开</td>
+</tr>
+<tr>
+<td style="text-align:left">DUP_VAL_ON_INDEX</td>
+<td style="text-align:left">唯一索引对应的列上有重复的值</td>
+</tr>
+<tr>
+<td style="text-align:left">INVALID_CURSOR</td>
+<td style="text-align:left">在不合法的游标上进行操作</td>
+</tr>
+<tr>
+<td style="text-align:left">INVALID_NUMBER</td>
+<td style="text-align:left">内嵌的 SQL 语句不能将字符转换为数字</td>
+</tr>
+<tr>
+<td style="text-align:left">NO_DATA_FOUND</td>
+<td style="text-align:left">使用 select into 未返回行，或应用索引表未初始化的  </td>
+</tr>
+<tr>
+<td style="text-align:left">TOO_MANY_ROWS</td>
+<td style="text-align:left">执行 select into 时，结果集超过一行</td>
+</tr>
+<tr>
+<td style="text-align:left">ZERO_DIVIDE</td>
+<td style="text-align:left">除数为 0</td>
+</tr>
+<tr>
+<td style="text-align:left">SUBSCRIPT_BEYOND_COUNT</td>
+<td style="text-align:left">元素下标超过嵌套表或 VARRAY 的最大值</td>
+</tr>
+<tr>
+<td style="text-align:left">SUBSCRIPT_OUTSIDE_LIMIT</td>
+<td style="text-align:left">使用嵌套表或 VARRAY 时，将下标指定为负数</td>
+</tr>
+<tr>
+<td style="text-align:left">VALUE_ERROR</td>
+<td style="text-align:left">赋值时，变量长度不足以容纳实际数据</td>
+</tr>
+<tr>
+<td style="text-align:left">LOGIN_DENIED</td>
+<td style="text-align:left">PL/SQL 应用程序连接到 oracle 数据库时，提供了不正确的用户名或密码</td>
+</tr>
+<tr>
+<td style="text-align:left">NOT_LOGGED_ON</td>
+<td style="text-align:left">PL/SQL 应用程序在没有连接 oralce 数据库的情况下访问数据</td>
+</tr>
+<tr>
+<td style="text-align:left">PROGRAM_ERROR</td>
+<td style="text-align:left">PL/SQL 内部问题，可能需要重装数据字典＆ pl./SQL 系统包</td>
+</tr>
+<tr>
+<td style="text-align:left">ROWTYPE_MISMATCH</td>
+<td style="text-align:left">宿主游标变量与 PL/SQL 游标变量的返回类型不兼容</td>
+</tr>
+<tr>
+<td style="text-align:left">SELF_IS_NULL</td>
+<td style="text-align:left">使用对象类型时，在 null 对象上调用对象方法</td>
+</tr>
+<tr>
+<td style="text-align:left">STORAGE_ERROR</td>
+<td style="text-align:left">运行 PL/SQL 时，超出内存空间</td>
+</tr>
+<tr>
+<td style="text-align:left">SYS_INVALID_ID</td>
+<td style="text-align:left">无效的 ROWID 字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">TIMEOUT_ON_RESOURCE</td>
+<td style="text-align:left">Oracle 在等待资源时超时  </td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle-db/" rel="tag"># oracle_db</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/17/1/" rel="next" title="glogin">
+                <i class="fa fa-chevron-left"></i> glogin
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/19/1/" rel="prev" title="OEL安装oracle11g">
+                OEL安装oracle11g <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/001.jpg"
+               alt="fqiyou" />
+          <p class="site-author-name" itemprop="name">fqiyou</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fqiyou</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
