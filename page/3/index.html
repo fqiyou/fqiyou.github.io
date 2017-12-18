@@ -278,6 +278,165 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
+                <a class="post-title-link" href="/2017/03/30/1/" itemprop="url">表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-30T20:25:31+08:00">
+                2017-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>建表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table user.t_name1 as select * from user.t_name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>改名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name move tablespace new_t_name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改为只读表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name read only;</span><br><span class="line">alter table t_name read write;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改,增加列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name modify (col_name (type));</span><br><span class="line">alter table t_name add (col_name (type) default &apos;0&apos;);</span><br><span class="line">alter table t_name rename column old_name to new_name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>禁用列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name set unused(col_name);--不能简单回复</span><br><span class="line">alter table hr.tempyc  drop unused columns;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>恢复列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE scott.TEST_UNUSED_COLUMNS</span><br><span class="line">(</span><br><span class="line">TEST_1 VARCHAR2(2),</span><br><span class="line">TEST_2 VARCHAR2(2),</span><br><span class="line">TEST_3 VARCHAR2(2),</span><br><span class="line">TEST_4 VARCHAR2(2),</span><br><span class="line">TEST_5 VARCHAR2(2)</span><br><span class="line">);</span><br><span class="line">select * from scott.TEST_UNUSED_COLUMNS;</span><br><span class="line">INSERT INTO scott.TEST_UNUSED_COLUMNS VALUES(&apos;A1&apos;,&apos;A2&apos;,&apos;A3&apos;,&apos;A4&apos;,&apos;A5&apos;);</span><br><span class="line">INSERT INTO scott.TEST_UNUSED_COLUMNS VALUES(&apos;B1&apos;,&apos;B2&apos;,&apos;B3&apos;,&apos;B4&apos;,&apos;B5&apos;);</span><br><span class="line">select * from scott.TEST_UNUSED_COLUMNS;</span><br><span class="line">alter table scott.test_unused_columns set unused column test_5;</span><br><span class="line">select * from sys.obj$ where name =&apos;TEST_UNUSED_COLUMNS&apos;;</span><br><span class="line">select * from sys.col$ where obj#=&apos;74427&apos;;</span><br><span class="line"></span><br><span class="line">update sys.col$ c set c.col#=c.intcol# where c.obj#=&apos;74427&apos;;</span><br><span class="line">update sys.tab$ c set c.cols=cols+1 where c.obj#=&apos;74427&apos;;</span><br><span class="line">update sys.col$ c set c.name=&apos;TEST_5&apos; where c.obj#=&apos;74427&apos; and c.col#=5;</span><br><span class="line">update sys.col$ c set c.property=0 where c.obj#=&apos;74427&apos;;</span><br><span class="line">commit;</span><br><span class="line">-- 重启</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table hr.tempyc drop(department_id);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>移动分区</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name move tablespace new_tb_name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重命名分区名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table ts_uh_user_change rename partition P_1 to P_0;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>指定分区查询</li>
+</ul>
+<pre><code>select * from ucr_sta1.ts_uh_user_remain partition (P_3_1)
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/03/30/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
                 <a class="post-title-link" href="/2017/03/30/1/" itemprop="url">表空间</a></h1>
         
 
@@ -596,7 +755,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>

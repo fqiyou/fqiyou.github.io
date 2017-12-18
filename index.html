@@ -259,6 +259,146 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/12/18/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/18/1/" itemprop="url">azkaban-部署</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-18T22:33:04+08:00">
+                2017-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-0-azkaban下载"><a href="#1-0-azkaban下载" class="headerlink" title="1.0 azkaban下载"></a>1.0 azkaban下载</h3><blockquote>
+<p>本次安装是3.30.1版本，需要java8编译和启动</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/azkaban/azkaban.git</span><br><span class="line">cd azkaban</span><br></pre></td></tr></table></figure>
+<h3 id="2-0-gradle下载和配置"><a href="#2-0-gradle下载和配置" class="headerlink" title="2.0 gradle下载和配置"></a>2.0 gradle下载和配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 修改gradle为本地,网络下载太慢</span><br><span class="line">vi gradle/wrapper/gradle-wrapper.properties</span><br><span class="line">distributionUrl=gradle-4.1-all.zip</span><br></pre></td></tr></table></figure>
+<h3 id="3-0-编译-拷贝编译文件"><a href="#3-0-编译-拷贝编译文件" class="headerlink" title="3.0 编译,拷贝编译文件"></a>3.0 编译,拷贝编译文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./gradlew build -x testll</span><br><span class="line">cp azkaban-db/build/install/azkaban-db/ azkaban</span><br><span class="line">cp azkaban-exec-server/build/install/azkaban-exec-server/ azkaban</span><br><span class="line">cp azkaban-solo-server/build/install/azkaban-solo-server/ azkaban</span><br><span class="line">cp azkaban-web-server/build/install/azkaban-web-server/ azkaban</span><br></pre></td></tr></table></figure>
+<h3 id="4-0-配置"><a href="#4-0-配置" class="headerlink" title="4.0 配置"></a>4.0 配置</h3><h4 id="4-1-ssl和db配置"><a href="#4-1-ssl和db配置" class="headerlink" title="4.1 ssl和db配置"></a>4.1 ssl和db配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 创建SSL配置</span><br><span class="line">keytool -keystore keystore -alias jetty -genkey -keyalg RSA </span><br><span class="line"># 数据库配置，新建azkaban用户，azkaban数据库</span><br><span class="line">use azkaban</span><br><span class="line">source azkaban-db/create-all-sql-0.1.0-SNAPSHOT.sql</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-azkaban-web-server"><a href="#4-2-azkaban-web-server" class="headerlink" title="4.2 azkaban-web-server"></a>4.2 azkaban-web-server</h4><blockquote>
+<p>conf可从azkaban-solo-server拷贝，extlib需新建并加入mysql驱动，logs新建</p>
+</blockquote>
+<h5 id="4-2-1-conf-azkaban-properties"><a href="#4-2-1-conf-azkaban-properties" class="headerlink" title="4.2.1 conf/azkaban.properties"></a>4.2.1 conf/azkaban.properties</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">[fqiyou@namenode azkaban-web-server]$ more conf/azkaban.properties</span><br><span class="line"># Azkaban Personalization Settings</span><br><span class="line">azkaban.name=coohua</span><br><span class="line">azkaban.label=spark003 Azkaban</span><br><span class="line">azkaban.color=#FF3601</span><br><span class="line">azkaban.default.servlet.path=/index</span><br><span class="line">web.resource.dir=/app/soft/azkaban/azkaban/azkaban-web-server/web</span><br><span class="line">default.timezone.id=Asia/Shanghai</span><br><span class="line"># Azkaban UserManager class</span><br><span class="line">user.manager.class=azkaban.user.XmlUserManager</span><br><span class="line">user.manager.xml.file=/app/soft/azkaban/azkaban/azkaban-web-server/conf/azkaban-users.xml</span><br><span class="line"># Loader for projects</span><br><span class="line">executor.global.properties=/app/soft/azkaban/azkaban/azkaban-web-server/conf/global.properties</span><br><span class="line">azkaban.project.dir=projects</span><br><span class="line">database.type=mysql</span><br><span class="line">mysql.port=3306</span><br><span class="line">mysql.host=localhost</span><br><span class="line">mysql.database=azkaban</span><br><span class="line">mysql.user=azkaban</span><br><span class="line">mysql.password=azkaban</span><br><span class="line">mysql.numconnections=100</span><br><span class="line"># Velocity dev mode</span><br><span class="line">velocity.dev.mode=false</span><br><span class="line"># Azkaban Jetty server properties.</span><br><span class="line">jetty.keystore=/app/soft/azkaban/azkaban/key/keystore</span><br><span class="line">jetty.password=coohua</span><br><span class="line">jetty.keypassword=coohua</span><br><span class="line">jetty.truststore=/app/soft/azkaban/azkaban/key/keystore</span><br><span class="line">jetty.trustpassword=coohua</span><br><span class="line">jetty.maxThreads=25</span><br><span class="line">jetty.ssl.port=8433</span><br><span class="line">jetty.hostname=localhost</span><br><span class="line"># Azkaban Executor settings</span><br><span class="line">executor.host=localhost</span><br><span class="line">executor.port=12321</span><br><span class="line"># mail settings</span><br><span class="line">mail.sender=data@coohua.com</span><br><span class="line">mail.host=imap.exmail.qq.com</span><br><span class="line">mail.user=data@coohua.com</span><br><span class="line">mail.password=coohua#008</span><br><span class="line">job.failure.email=yc@fqiyou.com</span><br><span class="line">job.success.email=yc@fqiyou.com</span><br><span class="line"># JMX stats</span><br><span class="line">jetty.connector.stats=true</span><br><span class="line">executor.connector.stats=true</span><br><span class="line"># Azkaban plugin settings</span><br><span class="line">azkaban.jobtype.plugin.dir=/app/soft/azkaban/azkaban/azkaban-web-server/plugins/jobtypes</span><br></pre></td></tr></table></figure>
+<h5 id="4-2-2-conf-log4j-properties"><a href="#4-2-2-conf-log4j-properties" class="headerlink" title="4.2.2 conf/log4j.properties"></a>4.2.2 conf/log4j.properties</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[fqiyou@namenoe conf]$ more log4j.properties</span><br><span class="line">log4j.rootLogger=INFO,C</span><br><span class="line">log4j.appender.C=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.C.Target=System.err</span><br><span class="line">log4j.appender.C.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.C.layout.ConversionPattern=%d&#123;yyyy-MM-ddHH:mm:ss&#125; %-5p %c&#123;1&#125;:%L - %m%n</span><br><span class="line">[fqiyou@namenode conf]$</span><br></pre></td></tr></table></figure>
+<h5 id="4-2-3-conf-azkaban-users-xml"><a href="#4-2-3-conf-azkaban-users-xml" class="headerlink" title="4.2.3 conf/azkaban-users.xml"></a>4.2.3 conf/azkaban-users.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[fqiyou@namenode conf]$ more azkaban-users.xml</span><br><span class="line">&lt;azkaban-users&gt;</span><br><span class="line">  &lt;user groups=&quot;azkaban&quot; password=&quot;azkaban&quot; roles=&quot;admin&quot; username=&quot;azkaban&quot;/&gt;</span><br><span class="line">  &lt;user password=&quot;metrics&quot; roles=&quot;metrics&quot; username=&quot;metrics&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;fqiyou&quot; password=&quot;fqiyou&quot;/&gt;</span><br><span class="line">  &lt;role name=&quot;admin&quot; permissions=&quot;ADMIN&quot;/&gt;</span><br><span class="line">  &lt;role name=&quot;metrics&quot; permissions=&quot;METRICS&quot;/&gt;</span><br><span class="line">&lt;/azkaban-users&gt;</span><br><span class="line">[fqiyou@namenode conf]$</span><br></pre></td></tr></table></figure>
+<h5 id="4-2-4-bin-azkaban-web-start-sh"><a href="#4-2-4-bin-azkaban-web-start-sh" class="headerlink" title="4.2.4 bin/azkaban-web-start.sh"></a>4.2.4 bin/azkaban-web-start.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 指定java版本，必须用8，服务器程序使用的是7且不能修改。</span><br><span class="line">/usr/java/jdk1.8.0_144/bin/java</span><br></pre></td></tr></table></figure>
+<h4 id="4-3-azkaban-exec-server"><a href="#4-3-azkaban-exec-server" class="headerlink" title="4.3 azkaban-exec-server"></a>4.3 azkaban-exec-server</h4><blockquote>
+<p>conf,plugins可从azkaban-solo-server拷贝，extlib需新建并加入mysql驱动，logs新建，projects新建</p>
+</blockquote>
+<h5 id="4-3-1-conf-azkaban-properties"><a href="#4-3-1-conf-azkaban-properties" class="headerlink" title="4.3.1 conf/azkaban.properties"></a>4.3.1 conf/azkaban.properties</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[coohua@spark003 conf]$ more azkaban.properties</span><br><span class="line">#Azkaban</span><br><span class="line">default.timezone.id=Asia/Shanghai</span><br><span class="line"></span><br><span class="line"># Azkaban JobTypes Plugins</span><br><span class="line">azkaban.jobtype.plugin.dir=/app/soft/azkaban/azkaban/azkaban-exec-server/plugins/jobtypes</span><br><span class="line"></span><br><span class="line">#Loader for projects</span><br><span class="line">executor.global.properties=/app/soft/azkaban/azkaban/azkaban-exec-server/conf/global.properties</span><br><span class="line">azkaban.project.dir=/app/soft/azkaban/azkaban/azkaban-exec-server/projects</span><br><span class="line"></span><br><span class="line">database.type=mysql</span><br><span class="line">mysql.port=3306</span><br><span class="line">mysql.host=localhost</span><br><span class="line">mysql.database=azkaban</span><br><span class="line">mysql.user=azkaban</span><br><span class="line">mysql.password=azkaban</span><br><span class="line">mysql.numconnections=100</span><br><span class="line"></span><br><span class="line"># Azkaban Executor settings</span><br><span class="line">executor.maxThreads=150</span><br><span class="line">executor.port=12321</span><br><span class="line">executor.flow.threads=130</span><br><span class="line"></span><br><span class="line">mail.sender=fqiyou</span><br><span class="line">mail.host=namenode</span><br><span class="line">[fqiyou@namenode conf]$</span><br></pre></td></tr></table></figure>
+<h5 id="4-3-2-conf-log4j-properties"><a href="#4-3-2-conf-log4j-properties" class="headerlink" title="4.3.2 conf/log4j.properties"></a>4.3.2 conf/log4j.properties</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[fqiyou@namenoe conf]$ more log4j.properties</span><br><span class="line">log4j.rootLogger=INFO,C</span><br><span class="line">log4j.appender.C=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.C.Target=System.err</span><br><span class="line">log4j.appender.C.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.C.layout.ConversionPattern=%d&#123;yyyy-MM-ddHH:mm:ss&#125; %-5p %c&#123;1&#125;:%L - %m%n</span><br><span class="line">[fqiyou@namenode conf]$</span><br></pre></td></tr></table></figure>
+<h5 id="4-3-3-conf-azkaban-users-xml"><a href="#4-3-3-conf-azkaban-users-xml" class="headerlink" title="4.3.3 conf/azkaban-users.xml"></a>4.3.3 conf/azkaban-users.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[fqiyou@namenode conf]$ more azkaban-users.xml</span><br><span class="line">&lt;azkaban-users&gt;</span><br><span class="line">  &lt;user groups=&quot;azkaban&quot; password=&quot;azkaban&quot; roles=&quot;admin&quot; username=&quot;azkaban&quot;/&gt;</span><br><span class="line">  &lt;user password=&quot;metrics&quot; roles=&quot;metrics&quot; username=&quot;metrics&quot;/&gt;</span><br><span class="line">  &lt;user username=&quot;fqiyou&quot; password=&quot;fqiyou&quot;/&gt;</span><br><span class="line">  &lt;role name=&quot;admin&quot; permissions=&quot;ADMIN&quot;/&gt;</span><br><span class="line">  &lt;role name=&quot;metrics&quot; permissions=&quot;METRICS&quot;/&gt;</span><br><span class="line">&lt;/azkaban-users&gt;</span><br><span class="line">[fqiyou@namenode conf]$</span><br></pre></td></tr></table></figure>
+<h5 id="4-2-4-bin-azkaban-executor-start-sh"><a href="#4-2-4-bin-azkaban-executor-start-sh" class="headerlink" title="4.2.4 bin/azkaban-executor-start.sh"></a>4.2.4 bin/azkaban-executor-start.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 指定java版本，必须用8，服务器程序使用的是7且不能修改。</span><br><span class="line">/usr/java/jdk1.8.0_144/bin/java</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/12/01/1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1673,221 +1813,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/04/13/1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fqiyou">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/001.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fqiyou-Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/13/1/" itemprop="url">rowid</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-13T19:54:31+08:00">
-                2017-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="rowid"><a href="#rowid" class="headerlink" title="rowid"></a>rowid</h2><blockquote>
-<p>搞Oracle的人，都知道表里有一个叫做rowid的伪列，也知道可以通过rowid来快速定位表里的记录，至少通过oracle的索引来快速查找表里的数据就是通过rowid来定位的。</p>
-</blockquote>
-<h3 id="Oracle-rowid格式："><a href="#Oracle-rowid格式：" class="headerlink" title="Oracle rowid格式："></a>Oracle rowid格式：</h3><blockquote>
-<p>9i+</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; select rowid from temp1.hlzh01 c where rownum &lt; 2;</span><br><span class="line">ROWID</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">AAASULAAJAAAACUAAB</span><br><span class="line"></span><br><span class="line">SQL&gt;</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>rowid</th>
-<th>AAASUL</th>
-<th>AAJ</th>
-<th>AAAACU</th>
-<th>AAB</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>说明</td>
-<td>数据对象号</td>
-<td>相对文件号</td>
-<td>数据块号</td>
-<td>行号</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>上述表格是Oracle 9i及以上版本数据库中的rowid格式：6位对象号+3位相对文件号+6位数据块号+3位行号，是一个18位的64进制值。这个18位的64进制值在数据库内却是以10个bytes合计80个bit的二进制数存放的，和我们直接看到的结果有所区别。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>进制</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>64</td>
-<td>A</td>
-<td>B</td>
-<td>…</td>
-<td>Z</td>
-<td>a</td>
-<td>b</td>
-<td>…</td>
-<td>z</td>
-<td>0</td>
-<td>1</td>
-<td>…</td>
-<td>9</td>
-<td>+</td>
-<td>/  </td>
-</tr>
-<tr>
-<td>10</td>
-<td>0</td>
-<td>1</td>
-<td>…</td>
-<td>25</td>
-<td>26</td>
-<td>27</td>
-<td>…</td>
-<td>51</td>
-<td>52</td>
-<td>53</td>
-<td>…</td>
-<td>61</td>
-<td>62</td>
-<td>63</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>18位的64进制值同80位的二进制数对应关系:其中，6位的对象号在数据库中是用32位二进制来存放的,也就意味着一个oracle数据库中最多可以有2^32个对象,即4G个对象;3位的相对文件号在数据库中是用10位二进制来存放的,也就意味着一个表空间中最多可以容纳2 ^10 =1024去掉全0和全1个数据文件,即1022个数据文件;6位的数据块号用22位二进制来存放的,也就意味着一个数据文件最多可以包含2^22 =4M个数据块;3位的行号在数据库中是用16位二进制来存放的，也就意味着一个数据块上最多可以容纳2^16=65536行记录。</p>
-</blockquote>
-<h3 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; select rowid from temp1.hlzh01 c where rownum &lt; 2;</span><br><span class="line">ROWID</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">AAASULAAJAAAACUAAB</span><br><span class="line"></span><br><span class="line">SQL&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>上例中，AAASUL就是temp1.hlzh01在数据库中的对象号,AAJ表示相对文件号,AAAACU则表示数据块编号,最后的3个AAB则表示行号.当然,我们完全可以根据上述的转换表,将这些64进制值直接转成对应的10进制值。分别(AAASUL = 75019,AAJ = 9,AAAACU = 148,AAASUL=1),temp1.hlzh01表在数据库内的对象号是75019,而该表在数据库内部是存放在第9号文件上的,这条记录则是放在第9号文件的第148个数据块上的;最后的AAA表示该记录是位于第9号文件上的第148个数据块上的第1条记录。   </p>
-<p>我们还可以通过数据库提供给我们的工具包来获取该信息：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;</span><br><span class="line">SQL&gt; select rowid,</span><br><span class="line">  2         dbms_rowid.rowid_object(rowid) object_id,</span><br><span class="line">  3         dbms_rowid.rowid_relative_fno(rowid) file_id,</span><br><span class="line">  4         dbms_rowid.rowid_block_number(rowid) block_id,</span><br><span class="line">  5         dbms_rowid.rowid_row_number(rowid) num,</span><br><span class="line">  6         rowidtochar(rowid)</span><br><span class="line">  7    from temp1.hlzh01 c</span><br><span class="line">  8   where rownum &lt; 2;</span><br><span class="line">ROWID                                                                             OBJECT_ID    FILE_ID   BLOCK_ID        NUM ROWIDTOCHAR(ROWID)</span><br><span class="line">-------------------------------------------------------------------------------- ---------- ---------- ---------- ---------- ------------------</span><br><span class="line">AAASULAAJAAAACUAAB                                                                    75019          9        148          1 AAASULAAJAAAACUAAB</span><br><span class="line"></span><br><span class="line">SQL&gt;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1938,7 +1863,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
