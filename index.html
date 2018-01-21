@@ -259,6 +259,133 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2018/01/21/1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fqiyou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fqiyou-Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/21/1/" itemprop="url">python-临时ftp服务器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T20:01:22+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="python-快速搭建ftp文件下载服务器"><a href="#python-快速搭建ftp文件下载服务器" class="headerlink" title="python 快速搭建ftp文件下载服务器"></a>python 快速搭建ftp文件下载服务器</h2><blockquote>
+<p>主机间互传文件，并且没有互信，每次都很麻烦</p>
+</blockquote>
+<h3 id="1-0-启动python临时服务器"><a href="#1-0-启动python临时服务器" class="headerlink" title="1.0 启动python临时服务器"></a>1.0 启动python临时服务器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜ python -m SimpleHTTPServer</span><br><span class="line">Serving HTTP on 0.0.0.0 port 8000 ...</span><br></pre></td></tr></table></figure>
+<h3 id="2-0-下载"><a href="#2-0-下载" class="headerlink" title="2.0 下载"></a>2.0 下载</h3><blockquote>
+<p>浏览器输入ip:8000,或者curl,wget<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:8000</span><br><span class="line">wget localhost:8000/a.txt</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="3-0-启动报错"><a href="#3-0-启动报错" class="headerlink" title="3.0 启动报错"></a>3.0 启动报错</h3><h4 id="3-1-没有SimpleHTTPServer模块"><a href="#3-1-没有SimpleHTTPServer模块" class="headerlink" title="3.1 没有SimpleHTTPServer模块"></a>3.1 没有SimpleHTTPServer模块</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server</span><br></pre></td></tr></table></figure>
+<h3 id="4-0-补充-脚本启动-指定端口"><a href="#4-0-补充-脚本启动-指定端口" class="headerlink" title="4.0 补充-脚本启动,指定端口"></a>4.0 补充-脚本启动,指定端口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">cd /Users/chaoyang/Work/coohua/nginx-soft-file &amp;&amp; nohup python -c &apos;import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer((&quot;127.0.0.1&quot;, 10000), shs.SimpleHTTPRequestHandler).serve_forever()&apos; &amp;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/12/18/1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1667,152 +1794,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.fqiyou.com/2017/04/15/1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="fqiyou">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/001.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Fqiyou-Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/15/1/" itemprop="url">启动(关闭)实例</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-15T19:58:41+08:00">
-                2017-04-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="启动-关闭-实例"><a href="#启动-关闭-实例" class="headerlink" title="启动(关闭)实例"></a>启动(关闭)实例</h2><ul>
-<li>nomount</li>
-</ul>
-<blockquote>
-<p>db参数文件位置是$ORACLE_HOME/dbs(11g)</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spfile&lt;sid&gt;.ora --&gt; spfile.ora --&gt; init&lt;sid&gt;.ora</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>nomount 分配内存 v$parameter,v$sga,v$session,v$process,v$instance</p>
-</blockquote>
-<ul>
-<li>mount</li>
-</ul>
-<blockquote>
-<p>打开参数文件中指定的控制文件 v$controfile,v$database,v$datafile,v$thread,v$logfile</p>
-</blockquote>
-<ul>
-<li>open</li>
-</ul>
-<blockquote>
-<p>打开数据文件,日志文件</p>
-</blockquote>
-<h4 id="启停"><a href="#启停" class="headerlink" title="启停"></a>启停</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">startup nomount|mount|open;</span><br><span class="line">shutdwon normal|immediate|transactional|abort;</span><br><span class="line"># srvctl start database -d orcl -o nomount;</span><br><span class="line">alter database open;</span><br></pre></td></tr></table></figure>
-<h4 id="强制启动-对应-shutdown-abort"><a href="#强制启动-对应-shutdown-abort" class="headerlink" title="强制启动 对应 shutdown abort;"></a>强制启动 对应 shutdown abort;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startup force;</span><br></pre></td></tr></table></figure>
-<h4 id="受限模式"><a href="#受限模式" class="headerlink" title="受限模式"></a>受限模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">startup restrict;</span><br><span class="line">alter system enable restricted session;</span><br><span class="line">alter system disable restricted session;</span><br></pre></td></tr></table></figure>
-<h4 id="只读模式"><a href="#只读模式" class="headerlink" title="只读模式"></a>只读模式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter database open read only;</span><br><span class="line">alter database read weite;</span><br></pre></td></tr></table></figure>
-<h4 id="指定参数启动"><a href="#指定参数启动" class="headerlink" title="指定参数启动"></a>指定参数启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startup pfile=&apos;/home/oracle/initorcl.ora&apos;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1863,7 +1844,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -1876,7 +1857,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>
@@ -1918,7 +1899,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
